@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Redireccionando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #25D366; /* Verde típico de WhatsApp */
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+    .spinner {
+      margin-top: 20px;
+      border: 4px solid #fff;
+      border-top: 4px solid #128C7E;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    // Redirige después de 2 segundos
+    setTimeout(function() {
+      const phoneNumber = '5491138004420';
+      const message = encodeURIComponent('Quiero Jugar');
+      const url = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.location.href = url;
+    }, 2000);
+  </script>
+</head>
+<body>
+  <h1>Redireccionando a WhatsApp...</h1>
+  <div class="spinner"></div>
+</body>
+</html>
