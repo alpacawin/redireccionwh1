@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AlpacaBet</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -53,7 +51,7 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      margin: 20px 0 20px;
+      margin: 20px 0;
       text-transform: uppercase;
       font-weight: bold;
       z-index: 2;
@@ -75,6 +73,7 @@
       font-size: 22px;
       color: gold;
       font-weight: 600;
+      text-shadow: 1px 1px 2px black;
     }
 
     .rating-box .text {
@@ -83,17 +82,16 @@
     }
 
     .winning-banner {
-      background-color: #ffffffcc;
+      background: rgba(255,255,255,0.9);
       color: #161e2a;
-      padding: 18px;
-      border-radius: 20px;
+      padding: 24px 20px;
+      border-radius: 16px;
       margin-top: 25px;
-      font-size: 18px;
+      font-size: 19px;
       font-weight: bold;
       text-align: center;
-      position: relative;
-      max-width: 400px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      max-width: 420px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
 
     .faces {
@@ -103,12 +101,54 @@
     }
 
     .faces img {
-      width: 45px;
-      height: 45px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       border: 2px solid white;
       margin-left: -10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .bubbles {
+      position: fixed;
+      right: 20px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .bubble {
+      background-color: #fff;
+      color: #161e2a;
+      padding: 14px 18px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: bubbleAnim 20s linear infinite;
+      max-width: 320px;
+    }
+
+    .bubble img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .bubble:nth-child(1) { animation-delay: 0s; }
+    .bubble:nth-child(2) { animation-delay: 5s; }
+    .bubble:nth-child(3) { animation-delay: 10s; }
+    .bubble:nth-child(4) { animation-delay: 15s; }
+
+    @keyframes bubbleAnim {
+      0%, 5%   { opacity: 0; transform: translateY(30px); }
+      10%, 25% { opacity: 1; transform: translateY(0); }
+      30%,100% { opacity: 0; transform: translateY(-30px); }
     }
 
     .notification-area {
@@ -158,6 +198,11 @@
     }
 
     @media (max-width: 768px) {
+      .bubbles {
+        right: 10px;
+        bottom: 80px;
+      }
+
       .notification-area {
         left: 10px;
         bottom: 10px;
@@ -173,34 +218,46 @@
         font-size: 18px;
       }
     }
-
-    @media (max-width: 480px) {
-      .notification .content {
-        font-size: 13px;
-      }
-
-      .notification {
-        min-width: 200px;
-      }
-
-      .faces img {
-        width: 38px;
-        height: 38px;
-      }
-
-      .rating-box .stars {
-        font-size: 20px;
-      }
-
-      .rating-box .text {
-        font-size: 15px;
-      }
-    }
   </style>
   <script>
+    // Auto-redirigir
     setTimeout(() => {
       window.location.href = "https://alpacabet.co/register";
     }, 20000);
+
+    // Notificaciones dinámicas
+    const names = ["Sofía", "Lucas", "Camila", "Mateo", "Martina", "Benjamín", "Josefa"];
+    const cities = ["Santiago", "Valparaíso", "Iquique", "Antofagasta", "Concepción", "La Serena", "Temuco"];
+    const notificationArea = document.createElement('div');
+    notificationArea.className = 'notification-area';
+    document.body.appendChild(notificationArea);
+
+    function getRandomUser() {
+      const gender = Math.random() > 0.5 ? 'men' : 'women';
+      const id = Math.floor(Math.random() * 60);
+      return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`;
+    }
+
+    function createNotification() {
+      const name = names[Math.floor(Math.random() * names.length)];
+      const city = cities[Math.floor(Math.random() * cities.length)];
+      const div = document.createElement('div');
+      div.className = 'notification';
+      div.innerHTML = `
+        <img src="${getRandomUser()}" alt="User">
+        <div class="content">
+          <strong>${name} (${city})</strong><br>
+          Premio pagado 🎰🎁
+        </div>
+      `;
+      notificationArea.appendChild(div);
+
+      setTimeout(() => {
+        div.remove();
+      }, 9500);
+    }
+
+    setInterval(createNotification, 3500);
   </script>
 </head>
 <body>
@@ -226,27 +283,23 @@
     </div>
   </div>
 
-  <div class="notification-area">
-    <div class="notification">
-      <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Cara">
-      <div class="content">
-        <strong>Sofía (Valparaíso)</strong><br>
-        Premio pagado 🎰🎁
-      </div>
+  <!-- Globos de opiniones -->
+  <div class="bubbles">
+    <div class="bubble">
+      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+      <span>Excelente plataforma, muy recomendable.</span>
     </div>
-    <div class="notification">
-      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Cara">
-      <div class="content">
-        <strong>Lucas (Santiago)</strong><br>
-        Premio pagado 🎰🎁
-      </div>
+    <div class="bubble">
+      <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="">
+      <span>Un servicio confiable y seguro.</span>
     </div>
-    <div class="notification">
-      <img src="https://randomuser.me/api/portraits/women/38.jpg" alt="Cara">
-      <div class="content">
-        <strong>Camila (Iquique)</strong><br>
-        Premio pagado 🎰🎁
-      </div>
+    <div class="bubble">
+      <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="">
+      <span>Disfruto mucho de los bonos y promociones.</span>
+    </div>
+    <div class="bubble">
+      <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
+      <span>Una excelente opción para jugar desde Chile.</span>
     </div>
   </div>
 </body>
