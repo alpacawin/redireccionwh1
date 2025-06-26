@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AlpacaBet</title>
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
       background-color: #ec1e49;
       color: white;
-      overflow-x: hidden;
       background-image: url('Screenshot_2.jpg');
       background-size: cover;
       background-position: center;
@@ -32,41 +30,36 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-      position: relative;
+      padding: 30px 20px;
     }
 
     .logo {
-      max-width: 90vw;
+      width: 220px;
       height: auto;
-      margin: 40px 0 20px;
+      margin-bottom: 20px;
     }
 
     .whatsapp-button {
       background-color: #25D366;
       color: #161e2a;
-      padding: 18px 40px;
-      font-size: 22px;
+      padding: 16px 40px;
+      font-size: 20px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      margin: 20px 0;
-      text-transform: uppercase;
       font-weight: bold;
-      z-index: 2;
+      margin: 15px 0;
     }
 
     .rating-box {
       background-color: rgba(255, 255, 255, 0.85);
       color: #161e2a;
-      padding: 14px 22px;
+      padding: 12px 20px;
       border-radius: 12px;
       text-align: center;
       font-weight: 500;
       margin-top: 10px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-      max-width: 300px;
     }
 
     .rating-box .stars {
@@ -74,30 +67,34 @@
       color: gold;
       font-weight: 600;
       text-shadow: 1px 1px 2px black;
+      border: 1px solid black;
+      border-radius: 8px;
+      padding: 5px 10px;
+      display: inline-block;
     }
 
     .rating-box .text {
-      font-size: 16px;
-      margin-top: 4px;
+      font-size: 15px;
+      margin-top: 6px;
     }
 
     .winning-banner {
       background: rgba(255,255,255,0.9);
       color: #161e2a;
-      padding: 24px 20px;
+      padding: 20px;
       border-radius: 16px;
       margin-top: 25px;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: bold;
       text-align: center;
-      max-width: 420px;
+      max-width: 400px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
 
     .faces {
       display: flex;
       justify-content: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .faces img {
@@ -109,41 +106,42 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
+    /* Opiniones - lado derecho */
     .bubbles {
       position: fixed;
-      right: 20px;
-      bottom: 100px;
+      right: 15px;
+      bottom: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      z-index: 100;
+      gap: 10px;
+      z-index: 10;
     }
 
     .bubble {
-      background-color: #fff;
+      background-color: white;
       color: #161e2a;
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-radius: 30px;
       display: flex;
       align-items: center;
+      max-width: 300px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.25);
       opacity: 0;
       transform: translateY(30px);
-      animation: bubbleAnim 20s linear infinite;
-      max-width: 320px;
+      animation: bubbleAnim 16s linear infinite;
     }
 
     .bubble img {
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
-      margin-right: 12px;
+      margin-right: 10px;
     }
 
     .bubble:nth-child(1) { animation-delay: 0s; }
-    .bubble:nth-child(2) { animation-delay: 5s; }
-    .bubble:nth-child(3) { animation-delay: 10s; }
-    .bubble:nth-child(4) { animation-delay: 15s; }
+    .bubble:nth-child(2) { animation-delay: 4s; }
+    .bubble:nth-child(3) { animation-delay: 8s; }
+    .bubble:nth-child(4) { animation-delay: 12s; }
 
     @keyframes bubbleAnim {
       0%, 5%   { opacity: 0; transform: translateY(30px); }
@@ -151,14 +149,15 @@
       30%,100% { opacity: 0; transform: translateY(-30px); }
     }
 
+    /* Notificaciones de ciudades */
     .notification-area {
       position: fixed;
       bottom: 20px;
-      left: 20px;
+      left: 15px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      z-index: 1000;
+      gap: 10px;
+      z-index: 10;
     }
 
     .notification {
@@ -169,63 +168,42 @@
       display: flex;
       align-items: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      animation: slideLeft 8s ease-in-out forwards;
       min-width: 240px;
-      animation: fadeSlide 10s ease-in-out infinite;
-      opacity: 0;
+      font-size: 14px;
     }
 
     .notification img {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       margin-right: 10px;
     }
 
-    .notification .content {
-      font-size: 14px;
-    }
-
-    .notification .content strong {
+    .notification strong {
       font-weight: 700;
-      color: #fff;
+      color: white;
     }
 
-    @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateX(-100%); }
-      10% { opacity: 1; transform: translateX(0); }
-      80% { opacity: 1; transform: translateX(0); }
+    @keyframes slideLeft {
+      0%   { opacity: 0; transform: translateX(-100%); }
+      10%  { opacity: 1; transform: translateX(0); }
+      90%  { opacity: 1; transform: translateX(0); }
       100% { opacity: 0; transform: translateX(-100%); }
     }
 
     @media (max-width: 768px) {
-      .bubbles {
-        right: 10px;
-        bottom: 80px;
-      }
-
-      .notification-area {
-        left: 10px;
-        bottom: 10px;
-      }
-
-      .winning-banner,
-      .rating-box {
-        width: 90vw;
-      }
-
-      .whatsapp-button {
-        width: 90vw;
-        font-size: 18px;
-      }
+      .logo { width: 160px; }
+      .whatsapp-button { width: 90vw; font-size: 18px; }
+      .winning-banner, .rating-box { width: 90vw; }
+      .bubble, .notification { font-size: 13px; }
     }
   </style>
   <script>
-    // Auto-redirigir
     setTimeout(() => {
       window.location.href = "https://alpacabet.co/register";
     }, 20000);
 
-    // Notificaciones dinámicas
     const names = ["Sofía", "Lucas", "Camila", "Mateo", "Martina", "Benjamín", "Josefa"];
     const cities = ["Santiago", "Valparaíso", "Iquique", "Antofagasta", "Concepción", "La Serena", "Temuco"];
     const notificationArea = document.createElement('div');
@@ -245,19 +223,16 @@
       div.className = 'notification';
       div.innerHTML = `
         <img src="${getRandomUser()}" alt="User">
-        <div class="content">
-          <strong>${name} (${city})</strong><br>
-          Premio pagado 🎰🎁
-        </div>
+        <div><strong>${name}</strong> desde ${city} <br>Premio pagado 🎰🎁</div>
       `;
       notificationArea.appendChild(div);
 
       setTimeout(() => {
         div.remove();
-      }, 9500);
+      }, 7500);
     }
 
-    setInterval(createNotification, 3500);
+    setInterval(createNotification, 3000);
   </script>
 </head>
 <body>
@@ -265,7 +240,7 @@
     <img src="logo_solo-removebg.png" alt="Alpaca Logo" class="logo" />
 
     <a href="https://alpacabet.co/register">
-      <button class="whatsapp-button"><strong>REGÍSTRATE EN ALPACABET</strong></button>
+      <button class="whatsapp-button">REGÍSTRATE EN ALPACABET</button>
     </a>
 
     <div class="rating-box">
