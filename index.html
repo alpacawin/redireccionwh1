@@ -4,9 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AlpacaBet</title>
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1048295967252620');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1048295967252620&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: Arial, sans-serif;
       background-color: #ec1e49;
@@ -16,7 +35,6 @@
       background-position: center;
       background-repeat: no-repeat;
     }
-
     body::before {
       content: "";
       position: fixed;
@@ -25,20 +43,17 @@
       background-color: rgba(0, 0, 0, 0.5);
       z-index: -1;
     }
-
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 30px 20px;
     }
-
     .logo {
       width: 220px;
       height: auto;
       margin-bottom: 20px;
     }
-
     .whatsapp-button {
       background-color: #25D366;
       color: #161e2a;
@@ -50,7 +65,6 @@
       font-weight: bold;
       margin: 15px 0;
     }
-
     .rating-box {
       background-color: rgba(255, 255, 255, 0.85);
       color: #161e2a;
@@ -61,7 +75,6 @@
       margin-top: 10px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
-
     .rating-box .stars {
       font-size: 22px;
       color: gold;
@@ -72,12 +85,10 @@
       padding: 5px 10px;
       display: inline-block;
     }
-
     .rating-box .text {
       font-size: 15px;
       margin-top: 6px;
     }
-
     .winning-banner {
       background: rgba(255,255,255,0.9);
       color: #161e2a;
@@ -90,13 +101,11 @@
       max-width: 400px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
-
     .faces {
       display: flex;
       justify-content: center;
       margin-bottom: 12px;
     }
-
     .faces img {
       width: 50px;
       height: 50px;
@@ -105,7 +114,6 @@
       margin-left: -10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-
     .bubbles {
       position: fixed;
       right: 15px;
@@ -115,7 +123,6 @@
       gap: 10px;
       z-index: 10;
     }
-
     .bubble {
       background-color: white;
       color: #161e2a;
@@ -129,25 +136,21 @@
       transform: translateY(30px);
       animation: bubbleAnim 16s linear infinite;
     }
-
     .bubble img {
       width: 45px;
       height: 45px;
       border-radius: 50%;
       margin-right: 10px;
     }
-
     .bubble:nth-child(1) { animation-delay: 0s; }
     .bubble:nth-child(2) { animation-delay: 4s; }
     .bubble:nth-child(3) { animation-delay: 8s; }
     .bubble:nth-child(4) { animation-delay: 12s; }
-
     @keyframes bubbleAnim {
       0%, 5%   { opacity: 0; transform: translateY(30px); }
       10%, 25% { opacity: 1; transform: translateY(0); }
       30%,100% { opacity: 0; transform: translateY(-30px); }
     }
-
     .notification-area {
       position: fixed;
       bottom: 20px;
@@ -157,7 +160,6 @@
       gap: 10px;
       z-index: 10;
     }
-
     .notification {
       background-color: #111;
       color: white;
@@ -170,32 +172,27 @@
       min-width: 240px;
       font-size: 14px;
     }
-
     .notification img {
       width: 38px;
       height: 38px;
       border-radius: 50%;
       margin-right: 10px;
     }
-
     .notification strong {
       font-weight: 700;
       color: white;
     }
-
     @keyframes slideLeft {
       0%   { opacity: 0; transform: translateX(-100%); }
       10%  { opacity: 1; transform: translateX(0); }
       90%  { opacity: 1; transform: translateX(0); }
       100% { opacity: 0; transform: translateX(-100%); }
     }
-
     @media (max-width: 768px) {
       .logo { width: 160px; }
       .whatsapp-button { width: 90vw; font-size: 18px; }
       .winning-banner, .rating-box { width: 90vw; }
       .bubbles, .notification-area { display: none; }
-
       .mobile-feedbacks {
         position: fixed;
         bottom: 20px;
@@ -208,13 +205,11 @@
         z-index: 100;
         width: 90vw;
       }
-
       .mobile-feedbacks .bubble,
       .mobile-feedbacks .notification {
         animation: fadeMobile 7s ease-in-out forwards;
         opacity: 0;
       }
-
       @keyframes fadeMobile {
         0%   { opacity: 0; transform: translateY(20px); }
         10%  { opacity: 1; transform: translateY(0); }
