@@ -192,48 +192,49 @@
       100% { opacity: 0; transform: translateX(-100%); }
     }
 
+    /* Contenedor móvil intercalado */
+    .mobile-feedbacks {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .logo { width: 160px; }
       .whatsapp-button { width: 90vw; font-size: 18px; }
       .winning-banner, .rating-box { width: 90vw; }
       .bubble, .notification { font-size: 13px; }
+
+      .bubbles,
+      .notification-area {
+        display: none;
+      }
+
+      .mobile-feedbacks {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        z-index: 10;
+        width: 90vw;
+        max-width: 360px;
+      }
+
+      .mobile-feedbacks .bubble,
+      .mobile-feedbacks .notification {
+        animation: fadeInOut 8s ease-in-out forwards;
+      }
+
+      @keyframes fadeInOut {
+        0%   { opacity: 0; transform: translateY(20px); }
+        10%  { opacity: 1; transform: translateY(0); }
+        80%  { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-20px); }
+      }
     }
   </style>
-  <script>
-    setTimeout(() => {
-      window.location.href = "https://alpacabet.co/register";
-    }, 20000);
-
-    const names = ["Sofía", "Lucas", "Camila", "Mateo", "Martina", "Benjamín", "Josefa"];
-    const cities = ["Santiago", "Valparaíso", "Iquique", "Antofagasta", "Concepción", "La Serena", "Temuco"];
-    const notificationArea = document.createElement('div');
-    notificationArea.className = 'notification-area';
-    document.body.appendChild(notificationArea);
-
-    function getRandomUser() {
-      const gender = Math.random() > 0.5 ? 'men' : 'women';
-      const id = Math.floor(Math.random() * 60);
-      return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`;
-    }
-
-    function createNotification() {
-      const name = names[Math.floor(Math.random() * names.length)];
-      const city = cities[Math.floor(Math.random() * cities.length)];
-      const div = document.createElement('div');
-      div.className = 'notification';
-      div.innerHTML = `
-        <img src="${getRandomUser()}" alt="User">
-        <div><strong>${name}</strong> desde ${city} <br>Premio pagado 🎰🎁</div>
-      `;
-      notificationArea.appendChild(div);
-
-      setTimeout(() => {
-        div.remove();
-      }, 7500);
-    }
-
-    setInterval(createNotification, 3000);
-  </script>
 </head>
 <body>
   <div class="container">
@@ -258,7 +259,7 @@
     </div>
   </div>
 
-  <!-- Globos de opiniones -->
+  <!-- Globos escritorio -->
   <div class="bubbles">
     <div class="bubble">
       <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
@@ -277,5 +278,83 @@
       <span>Una excelente opción para jugar desde Chile.</span>
     </div>
   </div>
+
+  <!-- Notificaciones escritorio -->
+  <div class="notification-area"></div>
+
+  <!-- Feedback móvil intercalado -->
+  <div class="mobile-feedbacks"></div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "https://alpacabet.co/register";
+    }, 20000);
+
+    const names = ["Sofía", "Lucas", "Camila", "Mateo", "Martina", "Benjamín", "Josefa"];
+    const cities = ["Santiago", "Valparaíso", "Iquique", "Antofagasta", "Concepción", "La Serena", "Temuco"];
+    const notificationArea = document.querySelector('.notification-area');
+    const mobileContainer = document.querySelector('.mobile-feedbacks');
+    const bubbleTexts = [
+      "Excelente plataforma, muy recomendable.",
+      "Un servicio confiable y seguro.",
+      "Disfruto mucho de los bonos y promociones.",
+      "Una excelente opción para jugar desde Chile."
+    ];
+
+    function getRandomUser() {
+      const gender = Math.random() > 0.5 ? 'men' : 'women';
+      const id = Math.floor(Math.random() * 60);
+      return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`;
+    }
+
+    function createNotification() {
+      const name = names[Math.floor(Math.random() * names.length)];
+      const city = cities[Math.floor(Math.random() * cities.length)];
+      const div = document.createElement('div');
+      div.className = 'notification';
+      div.innerHTML = `
+        <img src="${getRandomUser()}" alt="User">
+        <div><strong>${name}</strong> desde ${city} <br>Premio pagado 🎰🎁</div>
+      `;
+      notificationArea.appendChild(div);
+      setTimeout(() => div.remove(), 7500);
+    }
+
+    setInterval(createNotification, 3000);
+
+    // Móvil: alternar bubble y notificación
+    let bubbleIndex = 0;
+    let toggle = true;
+
+    function createMobileElement() {
+      if (window.innerWidth > 768) return;
+
+      let div;
+      if (toggle) {
+        div = document.createElement('div');
+        div.className = 'bubble';
+        div.innerHTML = `
+          <img src="${getRandomUser()}" alt="">
+          <span>${bubbleTexts[bubbleIndex % bubbleTexts.length]}</span>
+        `;
+        bubbleIndex++;
+      } else {
+        const name = names[Math.floor(Math.random() * names.length)];
+        const city = cities[Math.floor(Math.random() * cities.length)];
+        div = document.createElement('div');
+        div.className = 'notification';
+        div.innerHTML = `
+          <img src="${getRandomUser()}" alt="User">
+          <div><strong>${name}</strong> desde ${city} <br>Premio pagado 🎰🎁</div>
+        `;
+      }
+
+      mobileContainer.appendChild(div);
+      setTimeout(() => div.remove(), 7500);
+      toggle = !toggle;
+    }
+
+    setInterval(createMobileElement, 3500);
+  </script>
 </body>
 </html>
