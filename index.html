@@ -106,7 +106,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
-    /* Opiniones - lado derecho */
     .bubbles {
       position: fixed;
       right: 15px;
@@ -149,7 +148,6 @@
       30%,100% { opacity: 0; transform: translateY(-30px); }
     }
 
-    /* Notificaciones de ciudades */
     .notification-area {
       position: fixed;
       bottom: 20px;
@@ -192,21 +190,11 @@
       100% { opacity: 0; transform: translateX(-100%); }
     }
 
-    /* Contenedor móvil intercalado */
-    .mobile-feedbacks {
-      display: none;
-    }
-
     @media (max-width: 768px) {
       .logo { width: 160px; }
       .whatsapp-button { width: 90vw; font-size: 18px; }
       .winning-banner, .rating-box { width: 90vw; }
-      .bubble, .notification { font-size: 13px; }
-
-      .bubbles,
-      .notification-area {
-        display: none;
-      }
+      .bubbles, .notification-area { display: none; }
 
       .mobile-feedbacks {
         position: fixed;
@@ -216,21 +204,21 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
-        z-index: 10;
+        gap: 12px;
+        z-index: 100;
         width: 90vw;
-        max-width: 360px;
       }
 
       .mobile-feedbacks .bubble,
       .mobile-feedbacks .notification {
-        animation: fadeInOut 8s ease-in-out forwards;
+        animation: fadeMobile 7s ease-in-out forwards;
+        opacity: 0;
       }
 
-      @keyframes fadeInOut {
+      @keyframes fadeMobile {
         0%   { opacity: 0; transform: translateY(20px); }
         10%  { opacity: 1; transform: translateY(0); }
-        80%  { opacity: 1; transform: translateY(0); }
+        90%  { opacity: 1; transform: translateY(0); }
         100% { opacity: 0; transform: translateY(-20px); }
       }
     }
@@ -239,16 +227,13 @@
 <body>
   <div class="container">
     <img src="logo_solo-removebg.png" alt="Alpaca Logo" class="logo" />
-
     <a href="https://alpacabet.co/register">
       <button class="whatsapp-button">REGÍSTRATE EN ALPACABET</button>
     </a>
-
     <div class="rating-box">
       <div class="stars">⭐️⭐️⭐️⭐️⭐️ 4.9 de 5</div>
       <div class="text">Calificación excelente</div>
     </div>
-
     <div class="winning-banner">
       <div class="faces">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cara 1">
@@ -259,7 +244,7 @@
     </div>
   </div>
 
-  <!-- Globos escritorio -->
+  <!-- Escritorio -->
   <div class="bubbles">
     <div class="bubble">
       <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
@@ -279,10 +264,9 @@
     </div>
   </div>
 
-  <!-- Notificaciones escritorio -->
   <div class="notification-area"></div>
 
-  <!-- Feedback móvil intercalado -->
+  <!-- Móvil -->
   <div class="mobile-feedbacks"></div>
 
   <script>
@@ -307,7 +291,8 @@
       return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`;
     }
 
-    function createNotification() {
+    // Escritorio
+    function createNotificationDesktop() {
       const name = names[Math.floor(Math.random() * names.length)];
       const city = cities[Math.floor(Math.random() * cities.length)];
       const div = document.createElement('div');
@@ -320,18 +305,21 @@
       setTimeout(() => div.remove(), 7500);
     }
 
-    setInterval(createNotification, 3000);
+    setInterval(() => {
+      if (window.innerWidth > 768) {
+        createNotificationDesktop();
+      }
+    }, 3000);
 
-    // Móvil: alternar bubble y notificación
+    // Móvil
     let bubbleIndex = 0;
-    let toggle = true;
+    let isBubbleNext = true;
 
     function createMobileElement() {
       if (window.innerWidth > 768) return;
 
-      let div;
-      if (toggle) {
-        div = document.createElement('div');
+      const div = document.createElement('div');
+      if (isBubbleNext) {
         div.className = 'bubble';
         div.innerHTML = `
           <img src="${getRandomUser()}" alt="">
@@ -341,7 +329,6 @@
       } else {
         const name = names[Math.floor(Math.random() * names.length)];
         const city = cities[Math.floor(Math.random() * cities.length)];
-        div = document.createElement('div');
         div.className = 'notification';
         div.innerHTML = `
           <img src="${getRandomUser()}" alt="User">
@@ -351,7 +338,7 @@
 
       mobileContainer.appendChild(div);
       setTimeout(() => div.remove(), 7500);
-      toggle = !toggle;
+      isBubbleNext = !isBubbleNext;
     }
 
     setInterval(createMobileElement, 3500);
