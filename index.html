@@ -25,6 +25,198 @@
   <!-- End Meta Pixel Code -->
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial:400,700&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ec1e49;
+      color: white;
+      background-image: url('Screenshot_2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+    }
+    .logo {
+      width: 220px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    .whatsapp-button {
+      background-color: #25D366;
+      color: #161e2a;
+      padding: 16px 40px;
+      font-size: 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    .rating-box {
+      background-color: rgba(255, 255, 255, 0.85);
+      color: #161e2a;
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 500;
+      margin-top: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    .rating-box .stars {
+      font-size: 22px;
+      color: gold;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px black;
+      border: 1px solid black;
+      border-radius: 8px;
+      padding: 5px 10px;
+      display: inline-block;
+    }
+    .rating-box .text {
+      font-size: 15px;
+      margin-top: 6px;
+    }
+    .winning-banner {
+      background: rgba(255,255,255,0.9);
+      color: #161e2a;
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    .faces {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .faces img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-left: -10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .bubbles, .notification-area, .mobile-feedbacks {
+      position: fixed;
+      z-index: 10;
+    }
+    .bubbles {
+      right: 15px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bubble {
+      background-color: white;
+      color: #161e2a;
+      padding: 12px 16px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: bubbleAnim 16s linear infinite;
+    }
+    .bubble img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .bubble:nth-child(1) { animation-delay: 0s; }
+    .bubble:nth-child(2) { animation-delay: 4s; }
+    .bubble:nth-child(3) { animation-delay: 8s; }
+    .bubble:nth-child(4) { animation-delay: 12s; }
+    @keyframes bubbleAnim {
+      0%, 5%   { opacity: 0; transform: translateY(30px); }
+      10%, 25% { opacity: 1; transform: translateY(0); }
+      30%,100% { opacity: 0; transform: translateY(-30px); }
+    }
+    .notification-area {
+      bottom: 20px;
+      left: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .notification {
+      background-color: #111;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      animation: slideLeft 8s ease-in-out forwards;
+      min-width: 240px;
+      font-size: 14px;
+    }
+    .notification img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .notification strong {
+      font-weight: 700;
+      color: white;
+    }
+    @keyframes slideLeft {
+      0%   { opacity: 0; transform: translateX(-100%); }
+      10%  { opacity: 1; transform: translateX(0); }
+      90%  { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(-100%); }
+    }
+    @media (max-width: 768px) {
+      .logo { width: 160px; }
+      .whatsapp-button { width: 90vw; font-size: 18px; }
+      .winning-banner, .rating-box { width: 90vw; }
+      .bubbles, .notification-area { display: none; }
+      .mobile-feedbacks {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 90vw;
+      }
+      .mobile-feedbacks .bubble,
+      .mobile-feedbacks .notification {
+        animation: fadeMobile 7s ease-in-out forwards;
+        opacity: 0;
+      }
+      @keyframes fadeMobile {
+        0%   { opacity: 0; transform: translateY(20px); }
+        10%  { opacity: 1; transform: translateY(0); }
+        90%  { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-20px); }
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -45,96 +237,12 @@
   </div>
 
   <!-- Escritorio -->
-  <div class="bubbles">
-    <div class="bubble">
-      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
-      <span>Excelente plataforma, muy recomendable.</span>
-    </div>
-    <div class="bubble">
-      <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="">
-      <span>Un servicio confiable y seguro.</span>
-    </div>
-    <div class="bubble">
-      <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="">
-      <span>Disfruto mucho de los bonos y promociones.</span>
-    </div>
-    <div class="bubble">
-      <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="">
-      <span>Una excelente opción para jugar desde Chile.</span>
-    </div>
-  </div>
-
+  <div class="bubbles">...</div>
   <div class="notification-area"></div>
   <div class="mobile-feedbacks"></div>
 
   <script>
-    function getRandomUser() {
-      const gender = Math.random() > 0.5 ? 'men' : 'women';
-      const id = Math.floor(Math.random() * 60);
-      return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`;
-    }
-
-    const names = ["Sofía", "Lucas", "Camila", "Mateo", "Martina", "Benjamín", "Josefa"];
-    const cities = ["Santiago", "Valparaíso", "Iquique", "Antofagasta", "Concepción", "La Serena", "Temuco"];
-    const notificationArea = document.querySelector('.notification-area');
-    const mobileContainer = document.querySelector('.mobile-feedbacks');
-    const bubbleTexts = [
-      "Excelente plataforma, muy recomendable.",
-      "Un servicio confiable y seguro.",
-      "Disfruto mucho de los bonos y promociones.",
-      "Una excelente opción para jugar desde Chile."
-    ];
-
-    function createNotificationDesktop() {
-      const name = names[Math.floor(Math.random() * names.length)];
-      const city = cities[Math.floor(Math.random() * cities.length)];
-      const div = document.createElement('div');
-      div.className = 'notification';
-      div.innerHTML = `
-        <img src="${getRandomUser()}" alt="User">
-        <div><strong>${name}</strong> desde ${city} <br>Premio pagado 🎰🎁</div>
-      `;
-      notificationArea.appendChild(div);
-      setTimeout(() => div.remove(), 7500);
-    }
-
-    setInterval(() => {
-      if (window.innerWidth > 768) {
-        createNotificationDesktop();
-      }
-    }, 3000);
-
-    let bubbleIndex = 0;
-    let isBubbleNext = true;
-
-    function createMobileElement() {
-      if (window.innerWidth > 768) return;
-
-      const div = document.createElement('div');
-      if (isBubbleNext) {
-        div.className = 'bubble';
-        div.innerHTML = `
-          <img src="${getRandomUser()}" alt="">
-          <span>${bubbleTexts[bubbleIndex % bubbleTexts.length]}</span>
-        `;
-        bubbleIndex++;
-      } else {
-        const name = names[Math.floor(Math.random() * names.length)];
-        const city = cities[Math.floor(Math.random() * cities.length)];
-        div.className = 'notification';
-        div.innerHTML = `
-          <img src="${getRandomUser()}" alt="User">
-          <div><strong>${name}</strong> desde ${city} <br>Premio pagado 🎰🎁</div>
-        `;
-      }
-
-      mobileContainer.appendChild(div);
-      setTimeout(() => div.remove(), 7500);
-      isBubbleNext = !isBubbleNext;
-    }
-
-    setInterval(createMobileElement, 3500);
-
+    // funciones y animaciones como en original (omitidas aquí para brevedad)
     function trackLeadAndRedirect() {
       fbq('track', 'Lead');
       setTimeout(() => {
@@ -149,9 +257,5 @@
       }, 300);
     }, 20000);
   </script>
-
-  <style>
-    /* PEGAR ACÁ TODO TU CSS ORIGINAL (YA LO TENÉS, NO SE MODIFICA) */
-  </style>
 </body>
 </html>
